@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/speed-type/static/css/main.4af7c632.css",
+    "main.js": "/speed-type/static/js/main.9f849399.js",
+    "index.html": "/speed-type/index.html",
+    "main.4af7c632.css.map": "/speed-type/static/css/main.4af7c632.css.map",
+    "main.9f849399.js.map": "/speed-type/static/js/main.9f849399.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4af7c632.css",
+    "static/js/main.9f849399.js"
+  ]
+}
