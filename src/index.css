@@ -25,3 +25,8 @@ body {
 .text-lighter-black {
   color: var(--lighter-black);
 }
+
+.button-logout {
+  padding: 0.3rem 0.6rem;
+  background-color: navy;
+}

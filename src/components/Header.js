@@ -1,68 +1,23 @@
-import { useReducer } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Button from "./ui/Button";
 
-import { useResults } from "../contexts/ResultsContext";
-
-const ACTIONS = {
-  LOGOUT: "logout",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.LOGOUT:
-      action.payload.logout();
-
-      return state;
-  }
-}
-
-const defaultState = {};
-
 const Header = () => {
-  const [headerState, dispatchHeader] = useReducer(reducer, defaultState);
   const { currentUser, logout } = useAuth();
 
-  const { results } = useResults();
-
   function getClassName(navData) {
-    return `${navData.isActive ? "text-white" : ""} mr-2`;
-  }
-
-  function calculateAverageAccuracy(results) {
-    return (
-      results
-        .map((result) => +result.accuracy)
-        .reduce((acc, cur) => {
-          return acc + cur;
-        }, 0) / results.length
-    ).toFixed(2);
-  }
-
-  function calculateAverageSpeed(results) {
-    return (
-      results
-        .map((result) => +result.speed)
-        .reduce((acc, cur) => {
-          return acc + cur;
-        }, 0) / results.length
-    ).toFixed(2);
-  }
-
-  function getBestSpeed(results) {
-    return Math.max(...results.map((result) => result.speed));
+    return `${navData.isActive ? "text-white" : "text-blue-300"} mr-2`;
   }
 
   return (
     <header className="bg-blue-800 flex justify-between items-center px-4 py-2 ">
       <div className="font-extrabold italic text-2xl text-white">
-        Speed Type
+        <Link to="/">Speed Type</Link>
       </div>
 
       {currentUser && (
         <nav>
-          <ul className="flex font-bold text-lime-100">
+          <ul className="flex font-bold">
             <li>
               <NavLink to="/" className={getClassName}>
                 Home
@@ -84,25 +39,13 @@ const Header = () => {
 
       {currentUser && (
         <div>
-          <span className="text-white">{currentUser.email}</span>
+          <span className="text-white mr-2">{currentUser.email}</span>
           <Button
+            additionalClasses="button-logout"
             textContent="Logout"
-            onClick={() =>
-              dispatchHeader({
-                type: ACTIONS.LOGOUT,
-                payload: { logout },
-              })
-            }
+            onClick={() => logout()}
           />
         </div>
-      )}
-
-      {currentUser && (
-        <ul className="text-white">
-          <li>Average Accuracy: {calculateAverageAccuracy(results)}</li>
-          <li>Average Speed: {calculateAverageSpeed(results)}</li>
-          <li>Best Speed: {getBestSpeed(results)}</li>
-        </ul>
       )}
     </header>
   );
