@@ -1,7 +1,32 @@
-import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { useAuth } from "./contexts/AuthContext";
+
+import Home from "./pages/Home";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
 
 const App = () => {
-  return <div className="font-bold text-5xl text-emerald-700">Test</div>;
+  const { currentUser } = useAuth();
+
+  return (
+    <div>
+      <Routes>
+        <Route
+          path="/"
+          element={currentUser ? <Home /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={!currentUser ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/signup"
+          element={!currentUser ? <Signup /> : <Navigate to="/" />}
+        />
+      </Routes>
+    </div>
+  );
 };
 
 export default App;
